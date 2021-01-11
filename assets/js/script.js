@@ -1,12 +1,13 @@
 $(function () {});
   
-/* Declare Variables */
-var today = moment().format("dddd, MMMM Do");
-
+/* Declaring Variables */
 var now = moment().format("H A");
 
+var today = moment().format("dddd, MMMM Do");
+
+
 /* planWorkday entries for each hour of the workday */
-var planWorkday = [
+var workDay = [
   { time: "9 AM", event: "" },
   { time: "10 AM", event: "" },
   { time: "11 AM", event: "" },
@@ -19,18 +20,21 @@ var planWorkday = [
 ];
 
 /* Local Storage check */
-var workEvents = JSON.parse(localStorage.getItem("workDay"));
-if (workEvents) {
-  planWorkday = workEvents;
+var dayEvents = JSON.parse(localStorage.getItem("workDay"));
+if (dayEvents) {
+  workDay = dayEvents;
 }
 
 /* Current Day */
 $("#currentDay").text(today);
 
-/* Create rows */
-planWorkday.forEach(function(timeBlock, index) {
-	var timeLabel = timeBlock.time;
-	var blockColor = colorRow(timeLabel);
+/* Rows */
+workDay.forEach(function(timeBlock, index) {
+   
+    var blockColor = colorRow(timeLabel);
+
+    var timeLabel = timeBlock.time;
+   
 	var row =
 		'<div class="time-block" id="' +
 		index +
@@ -48,8 +52,8 @@ planWorkday.forEach(function(timeBlock, index) {
 
 /* Color rows based on current time */
 function colorRow(time) {
+    var planEntry = moment(time, "H A");
 	var planNow = moment(now, "H A");
-	var planEntry = moment(time, "H A");
 	if (planNow.isBefore(planEntry) === true) {
 		return "future";
 	} else if (planNow.isAfter(planEntry) === true) {
@@ -72,8 +76,8 @@ $(".saveBtn").on("click", function() {
 			.siblings("textarea")
 			.val()
 	);
-	planWorkday[blockID].event = userEntry;
+	workDay[blockID].event = userEntry;
 
-	/* Set local storage */
-	localStorage.setItem("workDay", JSON.stringify(planWorkday));
+	/* Putting local storage */
+	localStorage.setItem("workDay", JSON.stringify(workDay));
 });
