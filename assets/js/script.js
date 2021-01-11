@@ -6,7 +6,7 @@ var now = moment().format("H A");
 var today = moment().format("dddd, MMMM Do");
 
 
-/* planWorkday entries for each hour of the workday */
+/* workDay records for each hour of the workday */
 var workDay = [
   { time: "9 AM", event: "" },
   { time: "10 AM", event: "" },
@@ -46,7 +46,6 @@ workDay.forEach(function(timeBlock, index) {
 		timeBlock.event +
 		'</textarea><div class="col-sm col-lg-1 input-group-append"><button class="saveBtn btn-block" type="submit"><i class="fas fa-save"></i></button></div></div></div>';
 
-	/* Adding rows to container div */
 	$(".container").append(row);
 });
 
